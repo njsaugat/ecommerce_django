@@ -28,7 +28,7 @@ class ProductCategory(CreatedModified):
         return self.name
 
 
-class Product(models.Model):
+class Product(CreatedModified):
     seller=models.ForeignKey(User,
     related_name="products",on_delete=models.CASCADE)
     category=models.ForeignKey(
@@ -40,5 +40,12 @@ class Product(models.Model):
     desc=models.TextField(_("Description"),blank=True)
     image=models.ImageField(upload_to=product_image_path,blank=True)
     price=models.DecimalField(decimal_places=2,max_digits=10)
+    quantity=models.IntegerField(default=1)
 
+
+    class Meta:
+        ordering=("-created_at",)
+    
+    def __str__(self):
+        return self.name
 # Create your models here.
